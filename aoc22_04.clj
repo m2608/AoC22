@@ -21,33 +21,19 @@
   [pair]
   (map parse-int (str/split pair #"-")))
 
-(defn is-within-the-range?
-  "Проверяет, находится ли точка внутри дипазона."
-  [[left right] point]
-  (and (<= left point)
-       (>= right point)))
-
-(defn is-second-range-contained?
-  "Проверяет входит ли второй диапазон в первый."
-  [range1 [left2 right2]]
-  (and (is-within-the-range? range1 left2)
-       (is-within-the-range? range1 right2)))
-
 (defn is-contains?
   "Проверяет, входит ли один диапазон во в другой."
-  [[range1 range2]]
-  (or (is-second-range-contained? range1 range2)
-      (is-second-range-contained? range2 range1)))
-
+  [[[a b] [x y]]]
+  (or (and (<= a x b) (<= a y b))
+      (and (<= x a y) (<= x b y))))
+      
 (defn is-overlap?
   "Проверяет, пересекаются ли диапазоны."
-  [[range1 range2]]
-  ;; Диапазоны пересекаются, если один содержит другой или если
-  ;; одна из границ второго диапазона лежит в пределах границ
-  ;; первого (или наоборот).
-  (or (is-contains? [range1 range2])
-      (is-within-the-range? range1 (first range2))
-      (is-within-the-range? range1 (second range2))))
+  [[[a b] [x y]]]
+  (or (<= a x b)
+      (<= a y b)
+      (<= x a y)
+      (<= x b y)))
 
 (defn count-overlaps
   "Считает количество пересекающихся диапазонов в исходных данных.
