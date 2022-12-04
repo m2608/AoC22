@@ -21,13 +21,13 @@
   [pair]
   (map parse-int (str/split pair #"-")))
 
-(defn is-contains?
+(defn are-contain?
   "Проверяет, входит ли один диапазон во в другой."
   [[[a b] [x y]]]
   (or (and (<= a x b) (<= a y b))
       (and (<= x a y) (<= x b y))))
       
-(defn is-overlap?
+(defn are-overlap?
   "Проверяет, пересекаются ли диапазоны."
   [[[a b] [x y]]]
   (or (<= a x b)
@@ -47,7 +47,7 @@
      (filter identity)
      (count)))
 
-(count-overlaps data is-contains?)
+(count-overlaps data are-contain?)
 
-(count-overlaps data is-overlap?)
+(count-overlaps data are-overlap?)
 
