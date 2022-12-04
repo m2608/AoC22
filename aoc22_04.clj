@@ -21,13 +21,13 @@
   [pair]
   (map parse-int (str/split pair #"-")))
 
-(defn are-contain?
+(defn contain?
   "Проверяет, входит ли один диапазон во в другой."
   [[[a b] [x y]]]
   (or (and (<= a x b) (<= a y b))
       (and (<= x a y) (<= x b y))))
       
-(defn are-overlap?
+(defn overlap?
   "Проверяет, пересекаются ли диапазоны."
   [[[a b] [x y]]]
   (or (<= a x b)
@@ -39,15 +39,15 @@
   "Считает количество пересекающихся диапазонов в исходных данных.
   Признаком пересечения служит результат выполнения функции, переданной
   в качестве второго аргумента."
-  [data overlap?]
+  [data overlap-fn]
   (->> (str/split-lines data)
      (map (fn [line] (->> (str/split line #",")
                           (map parse-range)
-                          (overlap?))))
+                          (overlap-fn))))
      (filter identity)
      (count)))
 
-(count-overlaps data are-contain?)
+(count-overlaps data contain?)
 
-(count-overlaps data are-overlap?)
+(count-overlaps data overlap?)
 
