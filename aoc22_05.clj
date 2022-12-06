@@ -16,7 +16,7 @@ move 3 from 1 to 3
 move 2 from 2 to 1
 move 1 from 1 to 2")
 
-(defn parse-crate
+(defn parse-stack
   "Парсит стопку контейнеров. Возвращает список элементов в указанной стопке."
   [stacks stack-number]
   (let [pos (inc (* 4 stack-number))]
@@ -66,8 +66,8 @@ move 1 from 1 to 2")
                            (count))
       ;; Содержимое стопок. Здесь нужен вектор, а не список, т.к. мы
       ;; будем заменять стопки в дальнейшем при выполнении движений крана.
-      stacks (mapv #(parse-crate (butlast stacks-and-places) %)
-                  (range number-of-stacks))
+      stacks (mapv #(parse-stack (butlast stacks-and-places) %)
+                   (range number-of-stacks))
       ;; Движения крана.
       moves (map parse-move moves-lines)]
   (println (make-all-moves stacks moves :multigrip false))
