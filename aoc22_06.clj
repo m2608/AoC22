@@ -20,7 +20,7 @@
       (+ n len)
       (recur (rest s) (inc n)))))
 
-(for [len [4 14]]
+(doseq [len [4 14]]
   (println
     "Test data samples with length" (str len ":")
     (str/join " " (map #(find-marker % len)
