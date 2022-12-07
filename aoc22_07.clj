@@ -121,6 +121,6 @@ $ ls
       all-sizes (apply get-all-sizes (parse-tree data))
       to-free (- target-free (- total-size (:size (first all-sizes))))]
   (->> all-sizes
-       (filter #(> (:size %) to-free))
+       (filter #(>= (:size %) to-free))
        (map :size)
        (apply min)))
