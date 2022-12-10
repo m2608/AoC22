@@ -49,7 +49,7 @@ addx -5")
              (conj values x)))))
 
 (defn signal-strengths
-  "Определяем «силу сигнала» для каждого 40-го цикла, начиная с 20."
+  "Определяем «силу сигнала» для каждого `period` цикла, начиная с `start`."
   [start period values]
   (->> (zipmap (range start (count values) period)
                (take-nth period (drop start values)))
