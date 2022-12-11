@@ -48,7 +48,7 @@
   [data]
   ;; Используем свой парсер для каждой строки.
   (->> (map (fn [[line parse]] [(:key parse) ((:fn parse) line)])
-           (zipmap (s/split-lines data) parses))
+            (zipmap (s/split-lines data) parses))
        ;; Количество раз, которое обезьяна проверяла предметы. В начале - 0.
        (into {:inspected 0})
        ((fn [monkey]
@@ -102,9 +102,8 @@
   (->> (s/split data #"\n\n")
        (mapv parse-monkey)
        ((fn [monkeys]
-          ((apply comp (repeat rounds-no
-                               (partial round (make-dump-fn monkeys))))
-           monkeys)))
+          (let [dump-fn (make-dump-fn monkeys)]
+            (reduce (fn [monkeys _] (round dump-fn monkeys)) monkeys (range rounds-no)))))
        (sort-by :inspected)
        (map :inspected)
        (reverse)
