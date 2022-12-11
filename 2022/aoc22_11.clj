@@ -77,22 +77,22 @@
 (defn round
   "Вычисляет состояние обезьян после одного раунда."
   [dump-fn monkeys]
-  (loop [no 0 monkeys monkeys]
-    (if (>= no (count monkeys)) monkeys
-      (recur (inc no)
-             (let [current (get monkeys no)
-                   ;; Получаем список перекидываемых предметов для данной обезьяны.
-                   items-update (monkey-run dump-fn current)]
-               (-> monkeys
-                   ;; Она перебросит все свои предметы, у нее ничего не останется.
-                   (assoc-in [no :items] [])
-                   ;; Увеличиваем счетчик, показывающий, сколько раз обезьяна
-                   ;; рассматривала предметы.
-                   (assoc-in [no :inspected]
-                             (+ (:inspected current) (count items-update)))
-                   ;; Обновляем информацию об обезьянах, добавляя им предметы, перекинутые
-                   ;; текущей обезьяной.
-                   (monkeys-update items-update)))))))
+  (reduce (fn [monkeys no]
+            (let [current (get monkeys no)
+                  ;; Получаем список перекидываемых предметов для данной обезьяны.
+                  items-update (monkey-run dump-fn current)]
+              (-> monkeys
+                  ;; Она перебросит все свои предметы, у нее ничего не останется.
+                  (assoc-in [no :items] [])
+                  ;; Увеличиваем счетчик, показывающий, сколько раз обезьяна
+                  ;; рассматривала предметы.
+                  (assoc-in [no :inspected]
+                            (+ (:inspected current) (count items-update)))
+                  ;; Обновляем информацию об обезьянах, добавляя им предметы, перекинутые
+                  ;; текущей обезьяной.
+                  (monkeys-update items-update))))
+          monkeys
+          (range (count monkeys))))
 
 (defn monkey-business
   "Вычисляет уровень «занятости» обезьян за указанное количество раундов.
