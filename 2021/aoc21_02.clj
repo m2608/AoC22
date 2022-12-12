@@ -46,7 +46,7 @@ forward 2")
      (s/split-lines)
      (map parse-command)
      (reduce update-pos1 [0 0])
-     (#(* (first %) (second %))))
+     (apply *))
 
 (->> data
      (s/split-lines)
