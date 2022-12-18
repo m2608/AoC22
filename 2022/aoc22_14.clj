@@ -37,9 +37,11 @@
   [field [x1 y1] [x2 y2]]
   (if (= y1 y2)
     ;; Горизонтальная линия.
-    (reduce (fn [field x] (assoc-in field [y1 x] "#")) field (range (min x1 x2) (inc (max x1 x2))))
-    ;; Вертикальная ления.
-    (reduce (fn [field y] (assoc-in field [y x1] "#")) field (range (min y1 y2) (inc (max y1 y2))))))
+    (reduce (fn [field x] (assoc-in field [y1 x] "#"))
+            field (range (min x1 x2) (inc (max x1 x2))))
+    ;; Вертикальная линия.
+    (reduce (fn [field y] (assoc-in field [y x1] "#"))
+            field (range (min y1 y2) (inc (max y1 y2))))))
 
 (defn add-path
   "Добавляет путь по набору координат."

@@ -1,4 +1,6 @@
 *.txt
+*.dot
+*.png
 .lsp/
 .clj-kondo/
 .nrepl-port
