@@ -136,41 +136,6 @@
                                (assoc-in planes [neigh :score] new-score)))
                            (assoc-in planes [current :visited] true) neighbs))))))))
 
-;; (defn time-to-reach
-;;   "Возвращает время, которое потребуется чтобы по лабиринту `blizzs` добраться
-;;   от `start` до `finish` (и совершить обратный путь и т.д., если `turns > 1`)."
-;;   [size start finish blizzs turns]
-;;   ;; Чтобы не таскать везде эти параметры, определяем новые функции.
-;;   (let [move-bliz (partial move-blizzs size)
-;;         get-empty (partial get-empty-for-plane size start finish)]
-;;     (loop [;; Состояние текущего этажа (координаты и направления метелей).
-;;            blizzs blizzs
-;;            ;; Набор свободных точек на текущем этаже.
-;;            planes (assoc-in (get-empty 0 blizzs) [(into [0] start) :score] 0)
-;;            start start
-;;            finish finish
-;;            paths []
-;;            last-plane-no 0]
-;;       (let [reached-finish (into [last-plane-no] finish)
-;;             new-blizzs (move-bliz blizzs)]
-;;         (cond
-;;           (< (-> planes (get reached-finish) :score) ##Inf)
-;;             (if (= (count paths) (dec turns)) (first reached-finish)
-;;               (recur new-blizzs
-;;                      (distances (into (get-empty (inc last-plane-no) new-blizzs)
-;;                                       (filter #(or (-> % key (= reached-finish))
-;;                                                    (-> % key first (> last-plane-no))) planes))
-;;                                       ;; {reached-finish (get planes reached-finish)})
-;;                                 last-plane-no)
-;;                      finish start (conj paths (get planes reached-finish)) (inc last-plane-no)))
-;;
-;;           :else
-;;           (recur new-blizzs
-;;                  (distances (into (get-empty (inc last-plane-no) new-blizzs)
-;;                                   (filter #(and (-> % key first (= last-plane-no))
-;;                                                 (-> % val :score (< ##Inf))) planes))
-;;                             last-plane-no)
-;;                  start finish paths (inc last-plane-no)))))))
 (defn time-to-reach
   "Возвращает время, которое потребуется чтобы по лабиринту `blizzs` добраться
   от `start` до `finish` (и совершить обратный путь и т.д., если `turns > 1`)."
