@@ -164,9 +164,9 @@
   [size start finish blizzs turns]
   (loop [start start finish finish blizzs blizzs turns turns total 0]
     (if (zero? turns) total
-      (let [[new-blizzs reached] (time-to-reach size start finish blizzs)]
+      (let [[new-blizzs [time-one-turn _ _]] (time-to-reach size start finish blizzs)]
         ;; Меняем местами начальную и конечную точку и передаем текущее состояние метелей.
-        (recur finish start new-blizzs (dec turns) (+ total (first reached)))))))
+        (recur finish start new-blizzs (dec turns) (+ total time-one-turn))))))
 
 (let [{size :size start :start finish :finish blizzs :blizzs} (parse-map data)
       [_ reached] (time-to-reach size start finish blizzs)]
