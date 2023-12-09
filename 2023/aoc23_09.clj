@@ -38,4 +38,4 @@
                    (reduce #(- %2 %1) left)])
                 build-differences
                 parse-line))
-     (apply mapv +))
+     (apply map +))
