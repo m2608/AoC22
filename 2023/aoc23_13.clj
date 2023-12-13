@@ -65,7 +65,8 @@
   (+ (find-mirror diff (transpose pattern))
      (* 100 (find-mirror diff pattern))))
 
-(map #(->> (parse-data data)
-           (map (partial get-mirrors-score %))
-           (reduce +))
-     [0 1])
+(let [patterns (parse-data data)]
+  (map #(->> patterns
+             (map (partial get-mirrors-score %))
+             (reduce +))
+     [0 1]))
