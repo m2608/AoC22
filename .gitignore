@@ -1,7 +1,10 @@
 *.txt
 *.dot
 *.png
+*.html
 .lsp/
 .clj-kondo/
 .nrepl-port
 .cpcache/
+?/
+session.txt
