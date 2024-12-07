@@ -57,7 +57,7 @@
   [data]
   (let [years (request-years)
         y (get-in data [:options :year])]
-    (cond 
+    (cond
       (and y (years y)) (assoc data :year y)
       (and y (not (years y))) (do (println "Could not found the year" y "on the AoC site.")
                                   (System/exit 1))
