@@ -42,8 +42,15 @@
   (loop [args args ops ops]
     (let [value (apply (first ops) (take 2 args))
           next-args (drop 2 args)]
-      (if (empty? next-args) (= value result)
-        (recur (cons value next-args) (rest ops))))))
+      (cond
+        ;; Если больше аргументов нет, проверяем, получили ли результат.
+        (empty? next-args) (= value result)
+        ;; Т.к. в задаче все операции увеличивают значение, все аргументы
+        ;; положительны, можно сделать небольшую оптимизацию. Если промежуточное
+        ;; значение превысило результат, то равенство уже получить не удастся.
+        (> value result) false
+        ;; Продолжаем вычисления.
+        :else (recur (cons value next-args) (rest ops))))))
 
 (defn find-equation
   "Для всех возможных комбинаций из операторов `operators` проверяет, 
