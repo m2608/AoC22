@@ -44,8 +44,7 @@
   (reduce (fn [ps _]
             (->> ps
                  (mapv (partial get-reachable terrain))
-                 (reduce into)
-                 set))
+                 (reduce into #{})))
           #{start}
           (range 9)))
 
@@ -57,8 +56,7 @@
                  (mapv (fn [path]
                          (mapv (partial conj path)
                                (get-reachable terrain (peek path)))))
-                 (reduce into)
-                 set))
+                 (reduce into #{})))
           #{[start]}
           (range 9)))
 
@@ -73,5 +71,3 @@
 (let [terrain (parse-map (slurp "aoc24_10.txt"))
       points (get-points terrain 0)]
   (mapv (partial score terrain points) [get-reachable-tops get-all-paths]))
-
-
