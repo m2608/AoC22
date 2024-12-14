@@ -15,7 +15,7 @@
 (def evolve
   "Выполняет эволюцию камней указанное число раз и считает
   получившееся количество."
-  (memoize 
+  (memoize
     (fn [stones n]
       (if (zero? n) (count stones)
         (reduce + (mapv (fn [stone]
